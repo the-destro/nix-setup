@@ -1,8 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 set -e
-sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume --daemon
-. /Users/$(whoami)/.nix-profile/etc/profile.d/nix.sh
-
+#sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume --daemon
+source /etc/zshrc
 nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
 ./result/bin/darwin-installer && rm -Rf result
 
@@ -15,11 +14,14 @@ cp config.nix ~/.config/nixpkgs/config.nix
 
 cp ./darwin-configuration.nix ~/.nixpkgs
 
-echo 'export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH' >> ~/.zshrc
-exec zsh -c '
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$HOME/.nix-defexpr/channels:$NIX_PATH
+
 echo "RUNNING REBUILD"
 darwin-rebuild switch
 echo "DONE"
-';
+
 
 sed s/\<user\>/$USER/g ./home.nix | tee ~/.config/nixpkgs/home.nix
+
+home-manager switch
