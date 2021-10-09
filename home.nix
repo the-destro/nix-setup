@@ -50,7 +50,7 @@
     # workaround for nix-darwin bug
     initExtra=''
       export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$HOME/.nix-defexpr/channels:$NIX_PATH
-      source . /Users/$USER/.nix-profile/etc/profile.d/nix.sh
+      source /Users/$USER/.nix-profile/etc/profile.d/nix.sh
     '';
   };
 

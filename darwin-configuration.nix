@@ -9,7 +9,6 @@
       pkgs.vim
       pkgs.direnv
       pkgs.niv
-      pkgs.patchelf
     ];
 
   # Use a custom configuration.nix location.
@@ -22,11 +21,9 @@
 
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina
-  services.nix-daemon.enable = true;
   # programs.fish.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
-  nixpkgs.config.allowUnfree = true;
 }
